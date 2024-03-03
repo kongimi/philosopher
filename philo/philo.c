@@ -6,7 +6,14 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 15:11:51 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/03 15:11:55 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/03 15:20:36 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+#include <stdlib.h>
+
+int	main(void)
+{
+
+}
