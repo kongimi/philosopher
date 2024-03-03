@@ -1,36 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   handle_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/03 15:11:51 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/03 16:43:35 by npiyapan         ###   ########.fr       */
+/*   Created: 2024/03/03 16:17:59 by npiyapan          #+#    #+#             */
+/*   Updated: 2024/03/03 16:33:27 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/philo.h"
 
-int	check_argv(char **argv)
+void	handle_errors(char *error_msg)
 {
-	int	i;
-	// int	j;
-
-	i = 1;
-	while (argv[i])
-	{
-		printf("%s ", argv[i]);
-		i++;
-	}
-	return (0);
-}
-
-int	main(int argc, char **argv)
-{
-	if (argc != 6)
-		handle_errors("Usage : num_philo die eat sleep eat2\n");
-	if (check_argv(argv))
-		handle_errors("input must be number.\n");
-	return (0);
+	write(STDERR_FILENO, "Error: ", 7);
+	write(STDERR_FILENO, error_msg, strlen(error_msg));
+	write(STDERR_FILENO, "\n", 1);
+	exit(EXIT_FAILURE);
 }
