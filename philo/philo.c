@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 15:11:51 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/05 14:03:32 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/05 14:52:11 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,20 @@ int	check_argv(char **argv)
 	return (0);
 }
 
+
+
 int	main(int argc, char **argv)
 {
-	if (argc != 6)
-		handle_errors("Usage : amount die eat sleep eat2\n");
+	t_philo	data;
+
+	if (argc != 5 && argc != 6)
+		handle_errors("Usage : amount_of_philo die eat sleep stop\n");
 	if (check_argv(argv))
 		handle_errors("Usage : input must be number.\n");
+	if (argc == 6)
+		data.stop = ft_atoi(argv[5]);
+	else
+		data.stop = 0;
+	init_philo(&data, argv);
 	return (0);
 }

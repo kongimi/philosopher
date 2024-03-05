@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_error.c                                     :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/03 16:17:59 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/05 14:30:58 by npiyapan         ###   ########.fr       */
+/*   Created: 2024/03/05 14:46:09 by npiyapan          #+#    #+#             */
+/*   Updated: 2024/03/05 14:46:39 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/philo.h"
 
-void	handle_errors(char *error_msg)
+int	ft_atoi(const char *str)
 {
+	int	res;
 	int	i;
+	int	mul;
 
 	i = 0;
-	write(STDERR_FILENO, "Error: ", 7);
-	while (error_msg[i])
+	res = 0;
+	mul = 1;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
 		i++;
-	write(STDERR_FILENO, error_msg, i);
-	write(STDERR_FILENO, "\n", 1);
-	exit(EXIT_FAILURE);
+	if (str[i] == '-')
+		mul = -1;
+	if ((mul == -1) || (str[i] == '+'))
+		i++;
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		res = (res * 10) + (str[i] - '0');
+		i++;
+	}
+	return (res * mul);
 }
