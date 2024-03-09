@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 15:11:51 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/09 16:35:39 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/09 17:12:13 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ void	check_input(int argc, char **argv, t_philo *data)
 	if (argc != 5 && argc != 6)
 		handle_errors("Usage : amount_of_philo die eat sleep time_to_stop\n");
 	if (check_argv(argv))
-		handle_errors("Usage : input must be number or greather than 0.\n");
+		handle_errors("Usage : input must be only number.\n");
 	n = ft_atoi(argv[1]);
 	if (n > 200 || n < 1)
-		handle_errors("Philosopher must 1 - 200");
+		handle_errors("number of Philosopher must 1 - 200");
 	die = ft_atoi(argv[2]);
 	eat = ft_atoi(argv[3]);
 	sleep = ft_atoi(argv[4]);
