@@ -6,23 +6,20 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:42:37 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/07 17:05:27 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/09 11:20:29 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/philo.h"
 
-void	*print_hello(void *arg)
+void	*print_hello(void *args)
 {
-	int	i;
+	__uint64_t	my_time;
 
-	i = 0;
-	(void)arg;
-	while (i++ < 100)
-	{
-		printf("Hello ");
-		usleep(1000000);
-	}
+	(void)args;
+	my_time = get_time();
+	if (my_time)
+		printf("time = %ld\n", my_time);
 	return (NULL);
 }
 
@@ -58,7 +55,7 @@ void	init_philo(t_philo *data, char **argv)
 		data->time_die <= 0 || data->time_eat <= 0 ||\
 		data->time_sleep <= 0)
 		handle_errors("Input must greater than 0.");
-	if (pthread_create(&t1, NULL, print_hello, NULL))
+	if (pthread_create(&t1, NULL, print_hello, data))
 		handle_errors("Thread T1 error");
 	if (pthread_create(&t2, NULL, print_world, NULL))
 		handle_errors("Thread T2 error");
