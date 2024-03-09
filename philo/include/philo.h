@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 16:20:13 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/09 11:34:29 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/09 15:13:21 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_philo
 	int		time_eat;
 	int		time_sleep;
 	int		stop;
+	int		alive;
 }	t_philo;
 
 typedef struct s_time
