@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:42:37 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/09 15:16:30 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/09 16:35:22 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*print_hello(void *args)
 {
-	t_philo	*philo;
+	t_philo		*philo;
 	__uint64_t	my_time;
 
 	philo = (t_philo *)args;
