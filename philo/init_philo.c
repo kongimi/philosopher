@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:42:37 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/09 11:20:29 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/09 11:35:03 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	init_philo(t_philo *data, char **argv)
 	printf("eat = %d\n", data->time_eat);
 	printf("sleep = %d\n", data->time_sleep);
 	printf("stop = %d\n", data->stop);
-	if (data->amount <= 0 || data->amount > 200 ||\
-		data->time_die <= 0 || data->time_eat <= 0 ||\
+	if (data->amount <= 0 || data->amount > 200 || \
+		data->time_die <= 0 || data->time_eat <= 0 || \
 		data->time_sleep <= 0)
 		handle_errors("Input must greater than 0.");
 	if (pthread_create(&t1, NULL, print_hello, data))
