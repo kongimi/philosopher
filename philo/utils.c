@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:46:09 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/05 14:54:10 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/10 17:04:55 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,18 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	return (res * mul);
+}
+
+void	set_time(t_philo **philo, int n)
+{
+	__uint64_t	my_time;
+	int			i;
+
+	my_time = get_time();
+	i = 0;
+	while (i < n)
+	{
+		philo[i]->last_meal = my_time;
+		i++;
+	}
 }
