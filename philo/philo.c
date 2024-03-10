@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 15:11:51 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/10 15:05:51 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/10 16:15:59 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,28 +62,44 @@ void	*philo_act(void *data)
 	return (NULL);
 }
 
+void	create_threads(int num, pthread_t *thread, t_philo **philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < num)
+	{
+		pthread_create(&thread[i], NULL, &philo_act, philo[i]);
+		i++;
+	}
+}
+
+void	join_thread(pthread_t *thread, int num)
+{
+	int	i;
+
+	i = 0;
+	while (i < num)
+	{
+		pthread_join(thread[i], NULL);
+		i++;
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_philo			**philo;
+	pthread_mutex_t	**fork;
 	pthread_t		*threads;
-	int				i;
 
 	check_input(argc, argv);
 	philo = init_philo(argv, argc);
+	fork = init_fork(ft_atoi(argv[1]));
 	threads = malloc(sizeof(pthread_t) * ft_atoi(argv[1]));
-	i = 0;
-	while (i < ft_atoi(argv[1]))
-	{
-		pthread_create(&threads[i], NULL, &philo_act, philo[i]);
-		i++;
-	}
-	i = 0;
-	while (i < ft_atoi(argv[1]))
-	{
-		pthread_join(threads[i], NULL);
-		i++;
-	}
+	create_threads(ft_atoi(argv[1]), threads, philo);
+	join_thread(threads, ft_atoi(argv[1]));
 	free (threads);
 	free_philo (philo);
+	free_fork(ft_atoi(argv[1]), fork);
 	return (0);
 }

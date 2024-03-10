@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 16:20:13 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/10 15:03:48 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/10 16:11:15 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int				ft_atoi(const char *str);
 
 void			handle_errors(char *error_msg);
 void			free_philo(t_philo **data);
+void			free_fork(int i, pthread_mutex_t **fork);
 
 t_philo			**init_philo(char **argv, int argc);
 

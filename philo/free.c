@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:56:58 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/10 15:06:34 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/10 16:10:32 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,18 @@ void	free_philo(t_philo **data)
 		i++;
 	}
 	free (data);
+}
+
+void	free_fork(int i, pthread_mutex_t **fork)
+{
+	int	j;
+
+	j = 0;
+	while (j < i)
+	{
+		pthread_mutex_destroy(fork[j]);
+		free (fork[j]);
+		j++;
+	}
+	free (fork);
 }

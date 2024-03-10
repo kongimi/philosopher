@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:42:37 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/10 15:01:39 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/10 16:07:13 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ pthread_mutex_t	**init_fork(int i)
 
 	forks = malloc(sizeof(pthread_mutex_t) * i);
 	j = 0;
-	while (j > i)
+	while (j < i)
 	{
 		forks[j] = malloc(sizeof(pthread_mutex_t));
 		pthread_mutex_init(forks[j], NULL);
