@@ -6,48 +6,51 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:42:37 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/09 17:11:15 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/10 15:01:39 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/philo.h"
 
-void	*print_hello(void *args)
+t_philo	**init_philo(char **argv, int argc)
 {
-	t_philo		*philo;
-	__uint64_t	my_time;
+	t_philo	**philo;
+	int		num;
+	int		i;
 
-	philo = (t_philo *)args;
-	printf("amount in thread = %d\n", philo->amount);
-	while (philo->alive)
-	{
-		my_time = get_time();
-		if (my_time)
-			printf("time = %ld\n", my_time);
-		usleep(1000000);
-	}
-	return (NULL);
-}
-
-void	*print_world(void *arg)
-{
-	int	i;
-
+	num = ft_atoi(argv[1]);
+	philo = malloc(sizeof(t_philo) * num);
 	i = 0;
-	(void)arg;
-	while (i++ < 100)
+	while (i < num)
 	{
-		printf("World\n");
-		usleep(1000000);
+		philo[i] = malloc(sizeof(t_philo));
+		philo[i]->philo_num = num;
+		philo[i]->name = i;
+		philo[i]->alive = 1;
+		philo[i]->time_die = ft_atoi(argv[2]);
+		philo[i]->time_eat = ft_atoi(argv[3]);
+		philo[i]->time_sleep = ft_atoi(argv[4]);
+		if (argc == 6)
+			philo[i]->round_stop = ft_atoi(argv[5]);
+		else
+			philo[i]->round_stop = -1;
+		i++;
 	}
-	return (NULL);
+	return (philo);
 }
 
-void	init_philo(t_philo *data, char **argv)
+pthread_mutex_t	**init_fork(int i)
 {
-	data->amount = ft_atoi(argv[1]);
-	data->time_die = ft_atoi(argv[2]);
-	data->time_eat = ft_atoi(argv[3]);
-	data->time_sleep = ft_atoi(argv[4]);
-	data->alive = 1;
+	pthread_mutex_t	**forks;
+	int				j;
+
+	forks = malloc(sizeof(pthread_mutex_t) * i);
+	j = 0;
+	while (j > i)
+	{
+		forks[j] = malloc(sizeof(pthread_mutex_t));
+		pthread_mutex_init(forks[j], NULL);
+		j++;
+	}
+	return (forks);
 }

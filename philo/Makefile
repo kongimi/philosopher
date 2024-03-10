@@ -6,7 +6,7 @@
 #    By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/21 14:41:01 by npiyapan          #+#    #+#              #
-#    Updated: 2024/03/09 11:17:49 by npiyapan         ###   ########.fr        #
+#    Updated: 2024/03/10 14:57:09 by npiyapan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ OBJ_DIR = bin/
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
 
-SRC_FILE = philo handle_error utils init_philo time
+SRC_FILE = philo handle_error utils init_philo time free
 
 SRC = $($(addsuffix .c, $(SRC_FILE)))
 OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILE)))
