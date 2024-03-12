@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:56:58 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/10 16:10:32 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:52:08 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@ void	free_philo(t_philo **data)
 	j = data[i]->philo_num;
 	while (i < j)
 	{
-		free(data[i]);
+		// pthread_mutex_destroy(data[i]->prints);
+		// pthread_mutex_destroy(data[i]->left_fork);
+		// pthread_mutex_destroy(data[i]->right_fork);
+		// pthread_mutex_destroy(data[i]->round_exit);
+		free (data[i]);
 		i++;
 	}
 	free (data);

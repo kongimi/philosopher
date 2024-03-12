@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:46:09 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/10 17:04:55 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:56:40 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,12 @@ void	set_time(t_philo **philo, int n)
 		philo[i]->last_meal = my_time;
 		i++;
 	}
+}
+
+int	prnt_msg(char *msg, t_philo *philo)
+{
+	pthread_mutex_lock(philo->prints);
+	printf("prints = %d, %s\n", philo->name, msg);
+	pthread_mutex_unlock(philo->prints);
+	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/21 14:41:01 by npiyapan          #+#    #+#              #
-#    Updated: 2024/03/10 16:45:24 by npiyapan         ###   ########.fr        #
+#    Updated: 2024/03/12 15:31:29 by npiyapan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra
 
 SRC_FILE = philo handle_error utils init_philo time free \
-			check_input
+			check_input action
 
 SRC = $($(addsuffix .c, $(SRC_FILE)))
 OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILE)))
