@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:27:44 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/12 16:47:32 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:56:51 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,18 @@
 // 	return (1);
 // }
 
-// int	take_forks(t_philo *philo)
-// {
-// 	pthread_mutex_lock(philo->left_fork);
-	// check_alive(philo);
-	// prnt_msg("has taken left fork.", philo);
-	// pthread_mutex_unlock(philo->left_fork);
-	// pthread_mutex_lock(philo->right_fork);
-// 	prnt_msg("has taken right fork.", philo);
-// 	pthread_mutex_unlock(philo->right_fork);
-// 	return (1);
-// }
+int	prnt_msg(char *msg, t_philo *philo)
+{
+	pthread_mutex_lock(philo->mutex_print);
+	printf("%d %s\n", philo->name, msg);
+	pthread_mutex_unlock(philo->mutex_print);
+	return (1);
+}
+
+int	take_forks(t_philo *philo)
+{
+	pthread_mutex_lock(philo->left_fork);
+	pthread_mutex_lock(philo->right_fork);
+	prnt_msg("has taken forks.", philo);
+	return (1);
+}

@@ -6,11 +6,27 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 15:11:51 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/12 16:58:45 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:01:46 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/philo.h"
+
+int	eating(t_philo *philo)
+{
+	prnt_msg("eating", philo);
+	usleep(philo->time_eat);
+	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(philo->right_fork);
+	return (0);
+}
+
+int	sleeping(t_philo *philo)
+{
+	prnt_msg("sleeping", philo);
+	usleep(philo->time_sleep);
+	return (0);
+}
 
 void	*philo_act(void *data)
 {
@@ -21,19 +37,15 @@ void	*philo_act(void *data)
 	philo = (t_philo *)data;
 	while (philo->alive)
 	{
-		// if (!take_forks(philo))
-		// 	break ;
-		// pthread_mutex_lock(philo->round_exit);
-		// philo->round_eat++;
-		// pthread_mutex_unlock(philo->round_exit);
+		take_forks(philo);
+		eating(philo);
+		sleeping(philo);
 		now = get_time();
 		diff = (int)(now - philo->last_meal);
-		// if (!check_alive(philo))
-		// 	philo->alive = 0;
 		if (diff >= philo->time_die)
 			philo->alive = 0;
 	}
-	// prnt_msg("I'm die.", philo);
+	prnt_msg("I'm die.", philo);
 	return (NULL);
 }
 
@@ -61,38 +73,25 @@ void	join_thread(pthread_t *thread, int num)
 	}
 }
 
-void	assign_fork(t_philo **philo, pthread_mutex_t **forks)
-{
-	int	n;
-	int	i;
-
-	n = philo[0]->philo_num;
-	philo[0]->left_fork = forks[0];
-	philo[0]->right_fork = forks[n - 1];
-	i = 1;
-	while (i < n)
-	{
-		philo[i]->left_fork = forks[i];
-		philo[i]->right_fork = forks[i - 1];
-		i++;
-	}
-}
-
 int	main(int argc, char **argv)
 {
 	t_philo			**philo;
-	pthread_mutex_t	**forks;
 	pthread_t		*threads;
+	pthread_mutex_t	**forks;
+	pthread_mutex_t	*mutex_prints;
 
 	check_input(argc, argv);
 	philo = init_philo(argv, argc);
 	set_time(philo, ft_atoi(argv[1]));
 	forks = init_fork(ft_atoi(argv[1]));
+	mutex_prints = init_mutex_prints();
 	threads = malloc(sizeof(pthread_t) * ft_atoi(argv[1]));
+	assign_fork(philo, forks);
+	assign_mutex_print(philo, mutex_prints);
 	create_threads(ft_atoi(argv[1]), threads, philo);
 	join_thread(threads, ft_atoi(argv[1]));
-	assign_fork(philo, forks);
 	free (threads);
+	free_prints(mutex_prints);
 	free_philo (philo);
 	free_fork(ft_atoi(argv[1]), forks);
 	return (0);

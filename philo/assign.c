@@ -1,50 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   assign.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 14:46:09 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/13 12:03:21 by npiyapan         ###   ########.fr       */
+/*   Created: 2024/03/13 14:25:43 by npiyapan          #+#    #+#             */
+/*   Updated: 2024/03/13 14:26:23 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/philo.h"
+#include "include/philo.h"
 
-int	ft_atoi(const char *str)
+void	assign_fork(t_philo **philo, pthread_mutex_t **forks)
 {
-	int	res;
+	int	n;
 	int	i;
-	int	mul;
 
-	i = 0;
-	res = 0;
-	mul = 1;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
-		i++;
-	if (str[i] == '-')
-		mul = -1;
-	if ((mul == -1) || (str[i] == '+'))
-		i++;
-	while (str[i] >= '0' && str[i] <= '9')
+	n = philo[0]->philo_num;
+	philo[0]->left_fork = forks[0];
+	philo[0]->right_fork = forks[n - 1];
+	i = 1;
+	while (i < n)
 	{
-		res = (res * 10) + (str[i] - '0');
+		philo[i]->left_fork = forks[i];
+		philo[i]->right_fork = forks[i - 1];
 		i++;
 	}
-	return (res * mul);
 }
 
-void	set_time(t_philo **philo, int n)
+void	assign_mutex_print(t_philo **philo, pthread_mutex_t *mutex_print)
 {
-	__uint64_t	my_time;
-	int			i;
+	int	n;
+	int	i;
 
-	my_time = get_time();
+	n = philo[0]->philo_num;
 	i = 0;
 	while (i < n)
 	{
-		philo[i]->last_meal = my_time;
+		philo[i]->mutex_print = mutex_print;
 		i++;
 	}
 }
