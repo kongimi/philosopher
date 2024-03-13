@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 15:11:51 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/13 16:01:46 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:53:33 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ int	sleeping(t_philo *philo)
 	return (0);
 }
 
+void	thinking(t_philo *philo)
+{
+	prnt_msg("thinking", philo);
+}
+
 void	*philo_act(void *data)
 {
 	t_philo			*philo;
@@ -40,6 +45,7 @@ void	*philo_act(void *data)
 		take_forks(philo);
 		eating(philo);
 		sleeping(philo);
+		thinking(philo);
 		now = get_time();
 		diff = (int)(now - philo->last_meal);
 		if (diff >= philo->time_die)
