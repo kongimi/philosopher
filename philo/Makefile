@@ -6,11 +6,13 @@
 #    By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/21 14:41:01 by npiyapan          #+#    #+#              #
-#    Updated: 2024/03/13 14:27:11 by npiyapan         ###   ########.fr        #
+#    Updated: 2024/03/17 12:00:40 by npiyapan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
+
+HEADER = include/philo.h
 
 OBJ_DIR = bin/
 CC = cc
@@ -28,7 +30,7 @@ bin/%.o: %.c
 
 all:	$(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(HEADER)
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
 clean:

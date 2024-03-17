@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:42:37 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/13 14:15:58 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/17 14:14:15 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ t_philo	**init_philo(char **argv, int argc)
 	{
 		philo[i] = malloc(sizeof(t_philo));
 		philo[i]->philo_num = num;
-		philo[i]->name = i;
+		philo[i]->name = i + 1;
 		philo[i]->alive = 1;
+		philo[i]->eat_num = 0;
 		philo[i]->time_die = ft_atoi(argv[2]);
 		philo[i]->time_eat = ft_atoi(argv[3]);
 		philo[i]->time_sleep = ft_atoi(argv[4]);
@@ -62,4 +63,13 @@ pthread_mutex_t	*init_mutex_prints(void)
 	mutex_prints = malloc(sizeof(pthread_mutex_t));
 	pthread_mutex_init(mutex_prints, NULL);
 	return (mutex_prints);
+}
+
+pthread_mutex_t	*init_exit(void)
+{
+	pthread_mutex_t	*all_exit;
+
+	all_exit = malloc(sizeof(pthread_mutex_t));
+	pthread_mutex_init(all_exit, NULL);
+	return (all_exit);
 }

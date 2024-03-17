@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:25:43 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/13 14:26:23 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/16 16:20:00 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,20 @@ void	assign_mutex_print(t_philo **philo, pthread_mutex_t *mutex_print)
 	while (i < n)
 	{
 		philo[i]->mutex_print = mutex_print;
+		i++;
+	}
+}
+
+void	assign_mutex_exit(t_philo **philo, pthread_mutex_t *all_exit)
+{
+	int	n;
+	int	i;
+
+	n = philo[0]->philo_num;
+	i = 0;
+	while (i < n)
+	{
+		philo[i]->all_exit = all_exit;
 		i++;
 	}
 }

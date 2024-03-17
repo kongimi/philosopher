@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:56:58 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/13 14:17:59 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/16 14:55:42 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,10 @@ void	free_prints(pthread_mutex_t *mutex_print)
 {
 	pthread_mutex_destroy(mutex_print);
 	free (mutex_print);
+}
+
+void	free_all_exit(pthread_mutex_t *all_exit)
+{
+	pthread_mutex_destroy(all_exit);
+	free (all_exit);
 }
