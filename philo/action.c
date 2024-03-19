@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:27:44 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/17 15:00:57 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:40:05 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	prnt_msg(char *msg, t_philo *philo)
 	{
 		get_time_now(philo);
 		pthread_mutex_lock(philo->mutex_print);
-		printf("%lu %d %d %s\n", get_time(), philo->time_now, philo->name, msg);
+		if (philo->alive)
+			printf("%lu %d %d %s\n", get_time(), philo->time_now, philo->name, msg);
 		pthread_mutex_unlock(philo->mutex_print);
 	}
 	return (1);
@@ -58,7 +59,8 @@ int	take_forks(t_philo *philo)
 int	eating(t_philo *philo)
 {
 	prnt_msg("is eating", philo);
-	usleep(philo->time_eat * 1000);
+	// usleep(philo->time_eat * 1000);
+	usleep(philo->time_eat * (1000 + philo->name) );
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
 	if (!check_alive(philo))
@@ -79,7 +81,8 @@ int	eating(t_philo *philo)
 int	sleeping(t_philo *philo)
 {
 	prnt_msg("is sleeping", philo);
-	usleep(philo->time_sleep * 1000);
+	// usleep(philo->time_sleep * 1000);
+	usleep(philo->time_sleep * (1000 + philo->name) );
 	check_alive(philo);
 	return (0);
 }

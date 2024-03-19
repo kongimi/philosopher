@@ -6,7 +6,7 @@
 #    By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/21 14:41:01 by npiyapan          #+#    #+#              #
-#    Updated: 2024/03/17 15:58:34 by npiyapan         ###   ########.fr        #
+#    Updated: 2024/03/19 16:03:58 by npiyapan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,9 @@ HEADER = include/philo.h
 OBJ_DIR = bin/
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
+# CFLAGS = -Wall -Werror -Wextra -fsanitize=thread -g -lpthread
+# CFLAGS = -fsanitize=thread -g -lpthread
+
 
 SRC_FILE = philo handle_error utils init_philo time free \
 			check_input action assign check_die

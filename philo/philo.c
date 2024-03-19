@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 15:11:51 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/19 10:13:42 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:37:09 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	*philo_act(void *data)
 
 	philo = (t_philo *)data;
 	philo->last_meal = get_time();
-	if ((philo->name % 2) == 0)
+	if (((philo->name + 1) % 2) == 0)
 	{
-		usleep(philo->time_sleep);
+		usleep(philo->time_sleep * (1000));
 		prnt_msg("is thinking", philo);
 	}
 	while (philo->alive)
@@ -37,6 +37,7 @@ void	*philo_act(void *data)
 		prnt_msg("is thinking", philo);
 		if (!check_alive(philo))
 			break ;
+		usleep(10);
 	}
 	return (NULL);
 }
@@ -65,10 +66,40 @@ void	join_thread(pthread_t *thread, int num)
 	}
 }
 
+void	*monitor_all(void *data)
+{
+	t_philo	**philo;
+	int		i;
+	int		num;
+
+	i = 0;
+	philo = (t_philo **) data;
+	num = philo[i]->philo_num;
+	while (1)
+	{
+		if (!philo[i]->alive)
+		{
+			i = 0;
+			while (i < num)
+			{
+				philo[i]->alive = 0;
+				i++;
+			}
+			break ;
+		}
+		i++;
+		if (i >= num)
+			i = 0;
+		usleep(10);
+	}
+	return (NULL);
+}
+
 int	main(int argc, char **argv)
 {
 	t_philo			**philo;
 	pthread_t		*threads;
+	pthread_t		monitor;
 	pthread_mutex_t	**forks;
 	pthread_mutex_t	*mutex_prints;
 
@@ -81,7 +112,9 @@ int	main(int argc, char **argv)
 	assign_fork(philo, forks);
 	assign_mutex_print(philo, mutex_prints);
 	create_threads(ft_atoi(argv[1]), threads, philo);
+	pthread_create(&monitor, NULL, &monitor_all, philo);
 	join_thread(threads, ft_atoi(argv[1]));
+	pthread_join(monitor, NULL);
 	free (threads);
 	free_prints(mutex_prints);
 	free_philo (philo);

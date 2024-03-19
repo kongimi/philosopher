@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:46:09 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/19 10:10:56 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:21:05 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,7 @@ int	check_alive(t_philo *philo)
 		philo->alive = 0;
 		return (0);
 	}
+	if (!philo->alive)
+		return (0);
 	return (1);
 }
