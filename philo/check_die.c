@@ -1,44 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   assign.c                                           :+:      :+:    :+:   */
+/*   check_die.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 14:25:43 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/19 10:12:52 by npiyapan         ###   ########.fr       */
+/*   Created: 2024/03/17 15:42:21 by npiyapan          #+#    #+#             */
+/*   Updated: 2024/03/19 10:10:30 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/philo.h"
 
-void	assign_fork(t_philo **philo, pthread_mutex_t **forks)
+void	*check_die(void *philo_input)
 {
-	int	n;
-	int	i;
+	t_philo	**philos;
+	int		i;
+	int		num;
 
-	n = philo[0]->philo_num;
-	philo[0]->left_fork = forks[0];
-	philo[0]->right_fork = forks[n - 1];
-	i = 1;
-	while (i < n)
-	{
-		philo[i]->left_fork = forks[i];
-		philo[i]->right_fork = forks[i - 1];
-		i++;
-	}
-}
-
-void	assign_mutex_print(t_philo **philo, pthread_mutex_t *mutex_print)
-{
-	int	n;
-	int	i;
-
-	n = philo[0]->philo_num;
 	i = 0;
-	while (i < n)
+	philos = (t_philo **) philo_input;
+	num = philos[i]->philo_num;
+	while (1)
 	{
-		philo[i]->mutex_print = mutex_print;
+		if (!(philos[i]->alive))
+			break ;
 		i++;
+		if (i >= num)
+			i = 0;
 	}
+	return (NULL);
 }

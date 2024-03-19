@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:46:09 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/17 11:58:15 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/19 10:10:56 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,6 @@ void	set_time(t_philo **philo, int n)
 	}
 }
 
-void	check_exit(t_philo *philo)
-{
-	pthread_mutex_lock(philo->all_exit);
-	pthread_mutex_unlock(philo->all_exit);
-}
-
 int	check_alive(t_philo *philo)
 {
 	__uint64_t		now;
@@ -63,10 +57,8 @@ int	check_alive(t_philo *philo)
 	philo->time_now = (int)(now - philo->last_meal);
 	if (philo->time_now > philo->time_die)
 	{
-		pthread_mutex_lock(philo->all_exit);
 		if (philo->alive)
 			prnt_msg("died.", philo);
-		pthread_mutex_unlock(philo->all_exit);
 		philo->alive = 0;
 		return (0);
 	}

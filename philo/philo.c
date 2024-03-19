@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 15:11:51 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/17 14:58:28 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/19 10:13:42 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,35 +71,19 @@ int	main(int argc, char **argv)
 	pthread_t		*threads;
 	pthread_mutex_t	**forks;
 	pthread_mutex_t	*mutex_prints;
-	pthread_mutex_t	*all_exit;
-	// int				i;
 
 	check_input(argc, argv);
 	philo = init_philo(argv, argc);
 	set_time(philo, ft_atoi(argv[1]));
 	forks = init_fork(ft_atoi(argv[1]));
 	mutex_prints = init_mutex_prints();
-	all_exit = init_exit();
 	threads = malloc(sizeof(pthread_t) * ft_atoi(argv[1]));
 	assign_fork(philo, forks);
 	assign_mutex_print(philo, mutex_prints);
-	assign_mutex_exit(philo, all_exit);
 	create_threads(ft_atoi(argv[1]), threads, philo);
 	join_thread(threads, ft_atoi(argv[1]));
-	// i = 0;
-	// while (1)
-	// {
-	// 	while (!philo[1]->alive)
-	// 	{
-	// 		i++;
-	// 		if (i >= philo[i]->philo_num)
-	// 			i = 0;
-	// 		break;
-	// 	}
-	// }
 	free (threads);
 	free_prints(mutex_prints);
-	free_all_exit(all_exit);
 	free_philo (philo);
 	free_fork(ft_atoi(argv[1]), forks);
 	return (0);
