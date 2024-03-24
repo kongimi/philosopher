@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 15:11:51 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/19 15:37:09 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/24 12:52:34 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,9 @@ void	*philo_act(void *data)
 	while (philo->alive)
 	{
 		take_forks(philo);
-		if (!check_alive(philo))
-			break ;
 		eating(philo);
-		if (!check_alive(philo))
-			break ;
 		sleeping(philo);
-		if (!check_alive(philo))
-			break ;
 		prnt_msg("is thinking", philo);
-		if (!check_alive(philo))
-			break ;
 		usleep(10);
 	}
 	return (NULL);
@@ -79,6 +71,7 @@ void	*monitor_all(void *data)
 	{
 		if (!philo[i]->alive)
 		{
+			printf("from monitor all\n");
 			i = 0;
 			while (i < num)
 			{

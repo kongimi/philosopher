@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:27:44 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/19 14:40:05 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/24 13:14:55 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	take_forks(t_philo *philo)
 			pthread_mutex_unlock(philo->right_fork);
 			return (0);
 		}
+		prnt_msg("is taken a fork.", philo);
 	}
 	else
 	{
