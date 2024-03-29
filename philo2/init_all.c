@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: npiyapan <niran.analas@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 14:35:08 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/24 18:03:56 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/29 12:23:20 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	init_rule(t_rule *rule, int argc, char **argv)
 	rule->time_die = ft_atoi(argv[2]);
 	rule->time_eat = ft_atoi(argv[3]);
 	rule->time_sleep = ft_atoi(argv[4]);
-	rule->eat_num = -1;
+	rule->eat_num = INT64_MAX;
 	rule->can_print = 1;
 	if (argc == 6)
 		rule->eat_num = ft_atoi(argv[5]);
@@ -50,7 +50,7 @@ int	init_philo(t_philo **philo, t_rule *rule)
 	t_philo *p;
 	t_tmp	tmp;
 
-	p = malloc (sizeof(t_philo) * rule->philo_num);
+	p = (t_philo *)malloc (sizeof(t_philo) * rule->philo_num);
 	if (!p)
 	{
 		pthread_mutex_destroy(&rule->mu_can_print);
@@ -83,7 +83,7 @@ int	init_philo(t_philo **philo, t_rule *rule)
 	return (0);
 }
 
-int	init_threads(pthread_t *threads, t_philo *philo)
+int	init_threads(t_philo *philo)
 {
 	int i;
 	int num;
@@ -92,8 +92,17 @@ int	init_threads(pthread_t *threads, t_philo *philo)
 	num = philo[i].rule->philo_num;
 	while (i < num)
 	{
-		pthread_create(&threads[i], NULL, &routine, &philo[i]);
+		if (pthread_create(&philo[i].thds, NULL, &ft_action, &philo[i]))
+		{
+			write(2, "Fail create thread\n", 19);
+			exit (1);
+		}
 		i++;
+	}
+	if (pthread_create(&philo[0].monitor_thds, NULL, &ft_monitor, philo))
+	{
+		write(2, "Fail create monitor thread\n", 27);
+		exit (1);
 	}
 	return (0);
 }

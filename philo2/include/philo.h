@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: npiyapan <niran.analas@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:45:46 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/24 18:05:51 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/29 15:17:46 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ typedef struct s_rule
 	int				time_eat;
 	int				time_sleep;
 	int				alive;
-	int				eat_num;
+	long long		eat_num;
+	uint64_t		start_time;
 	pthread_mutex_t	mu_can_print;
 	int				can_print;
 }	t_rule;
@@ -45,13 +46,32 @@ typedef struct s_philo
 	pthread_mutex_t	mutex_last_meal;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	l_fork;
+	pthread_t		thds;
+	pthread_t		monitor_thds;
 }	t_philo;
 
 void			check_input(int argc, char **argv);
 void			handle_errors(char *error_msg);
 void 			init_r_fork(t_philo *p);
+void			prnt_msg(t_philo *philo, char *s);
+void			ft_bzero(void *s, size_t n);
+void			ft_usleep(uint64_t ms);
+
+void			*ft_action(void *p);
+void			*ft_calloc(size_t count, size_t size);
+void			*ft_monitor(void *p);
 
 int				ft_atoi(const char *str);
 int				init_rule(t_rule *rule, int argc, char **argv);
 int				init_philo(t_philo **philo, t_rule *rule);
-int				init_threads(pthread_t *threads, t_philo *philo);
+int				init_threads(t_philo *philo);
+int				get_alive_time(uint64_t start_time);
+
+uint64_t		get_time(void);
+
+size_t			ft_strlen(const char *s);
+size_t			ft_strlcat(char	*dst, const char *src, size_t dstsize);
+
+char			*ft_strjoin(char const *s1, char const *s2);
+
+static void		monitor_loop(t_philo *p, t_rule *p_rule);
