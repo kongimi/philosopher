@@ -6,7 +6,7 @@
 /*   By: npiyapan <niran.analas@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:45:46 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/29 15:17:46 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/29 23:22:57 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ typedef struct s_tmp
 	int	j;
 	int	k;
 }	t_tmp;
-
 
 typedef struct s_rule
 {
@@ -52,13 +51,11 @@ typedef struct s_philo
 
 void			check_input(int argc, char **argv);
 void			handle_errors(char *error_msg);
-void 			init_r_fork(t_philo *p);
+void			init_r_fork(t_philo *p);
 void			prnt_msg(t_philo *philo, char *s);
-void			ft_bzero(void *s, size_t n);
 void			ft_usleep(uint64_t ms);
 
 void			*ft_action(void *p);
-void			*ft_calloc(size_t count, size_t size);
 void			*ft_monitor(void *p);
 
 int				ft_atoi(const char *str);
@@ -70,8 +67,7 @@ int				get_alive_time(uint64_t start_time);
 uint64_t		get_time(void);
 
 size_t			ft_strlen(const char *s);
-size_t			ft_strlcat(char	*dst, const char *src, size_t dstsize);
-
-char			*ft_strjoin(char const *s1, char const *s2);
 
 static void		monitor_loop(t_philo *p, t_rule *p_rule);
+
+int				join_threads(t_philo *philo, int num);

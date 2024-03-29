@@ -6,7 +6,7 @@
 /*   By: npiyapan <niran.analas@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:45:10 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/29 22:41:26 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/29 23:18:52 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,6 @@ static int	eating(t_philo *philo)
 	}
 	pthread_mutex_unlock(&philo->rule->mu_can_print);
 	pthread_mutex_lock(&philo->mutex_last_meal);
-	// if (get_alive_time(philo->last_meal) >= philo->rule->time_die)
-	// {
-	// 	pthread_mutex_unlock(&philo->mutex_last_meal);
-	// 	prnt_msg(philo, "is die");
-	// 	pthread_mutex_lock(&philo->rule->mu_can_print);
-	// 	philo->rule->can_print = 0;
-	// 	pthread_mutex_unlock(&philo->rule->mu_can_print);
-	// 	pthread_mutex_unlock(&philo->l_fork);
-	// 	pthread_mutex_unlock(philo->r_fork);
-	// 	return (1);
-	// }
 	philo->last_meal = get_time();
 	pthread_mutex_unlock(&philo->mutex_last_meal);
 	pthread_mutex_unlock(&philo->l_fork);
@@ -75,7 +64,7 @@ void	*ft_action(void *p)
 	philo->last_meal = get_time();
 	philo->rule->start_time = get_time();
 	pthread_mutex_unlock(&philo->mutex_last_meal);
-	if ( (philo->name % 2) == 0)
+	if ((philo->name % 2) == 0)
 		ft_usleep(philo->rule->time_sleep);
 	while (i < philo->rule->eat_num)
 	{
@@ -93,26 +82,10 @@ void	*ft_action(void *p)
 	return (NULL);
 }
 
-static int	join_thread(t_philo *philo, int num)
-{
-	int	i;
-
-	i = 0;
-	while (i < num)
-	{
-		pthread_join(philo[i].thds, NULL);
-		i++;
-	}
-	pthread_join(philo[0].monitor_thds, NULL);
-	return (0);
-}
-
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_rule		rule;
 	t_philo		*philo;
-	pthread_t	*threads;
-	int			i;
 
 	check_input(argc, argv);
 	if (init_rule(&rule, argc, argv))
@@ -121,7 +94,7 @@ int main(int argc, char **argv)
 		return (1);
 	if (init_threads(philo))
 		return (1);
-	join_thread(philo, rule.philo_num);
+	join_threads(philo, rule.philo_num);
 	free (philo);
 	return (0);
 }

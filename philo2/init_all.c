@@ -6,7 +6,7 @@
 /*   By: npiyapan <niran.analas@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 14:35:08 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/29 12:23:20 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/29 23:23:08 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ int	init_rule(t_rule *rule, int argc, char **argv)
 	return (0);
 }
 
-void init_r_fork(t_philo *p)
+void	init_r_fork(t_philo *p)
 {
-	int i;
-	int num;
+	int	i;
+	int	num;
 
 	i = 0;
 	num = p[0].rule->philo_num;
@@ -45,19 +45,10 @@ void init_r_fork(t_philo *p)
 	}
 }
 
-int	init_philo(t_philo **philo, t_rule *rule)
+int	init_each(t_philo *p, t_rule *rule)
 {
-	t_philo *p;
 	t_tmp	tmp;
 
-	p = (t_philo *)malloc (sizeof(t_philo) * rule->philo_num);
-	if (!p)
-	{
-		pthread_mutex_destroy(&rule->mu_can_print);
-		write (2, "malloc error init_philo\n", 24);
-		return (1);
-	}
-	memset(p, 0, sizeof(t_philo) * rule->philo_num);
 	tmp.i = 0;
 	while (tmp.i < rule->philo_num)
 	{
@@ -78,6 +69,24 @@ int	init_philo(t_philo **philo, t_rule *rule)
 		}
 		tmp.i++;
 	}
+	return (0);
+}
+
+int	init_philo(t_philo **philo, t_rule *rule)
+{
+	t_philo	*p;
+	t_tmp	tmp;
+
+	p = (t_philo *)malloc (sizeof(t_philo) * rule->philo_num);
+	if (!p)
+	{
+		pthread_mutex_destroy(&rule->mu_can_print);
+		write (2, "malloc error init_philo\n", 24);
+		return (1);
+	}
+	memset(p, 0, sizeof(t_philo) * rule->philo_num);
+	if (init_each(p, rule))
+		return (1);
 	init_r_fork(p);
 	*philo = p;
 	return (0);
@@ -85,8 +94,8 @@ int	init_philo(t_philo **philo, t_rule *rule)
 
 int	init_threads(t_philo *philo)
 {
-	int i;
-	int num;
+	int	i;
+	int	num;
 
 	i = 0;
 	num = philo[i].rule->philo_num;
