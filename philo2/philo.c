@@ -6,7 +6,7 @@
 /*   By: npiyapan <niran.analas@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:45:10 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/29 22:26:59 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/29 22:41:26 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static int	eating(t_philo *philo)
 		pthread_mutex_unlock(philo->r_fork);
 		return (1);
 	}
+	pthread_mutex_unlock(&philo->rule->mu_can_print);
 	pthread_mutex_lock(&philo->mutex_last_meal);
 	// if (get_alive_time(philo->last_meal) >= philo->rule->time_die)
 	// {

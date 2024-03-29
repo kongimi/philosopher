@@ -6,7 +6,7 @@
 /*   By: npiyapan <niran.analas@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 12:26:12 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/29 15:30:11 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/29 22:41:42 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	*ft_monitor(void *p)
 	while (philo[0].rule->can_print)
 		monitor_loop(philo, p_rule);
 	i = 0;
+	ft_usleep(1000);
 	while (i < philo->rule->philo_num)
 	{
 		pthread_mutex_destroy(&philo[i].l_fork);
