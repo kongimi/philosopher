@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npiyapan <niran.analas@gmail.com>          +#+  +:+       +#+        */
+/*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:46:09 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/29 23:21:23 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/30 11:42:19 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ size_t	ft_strlen(const char *s)
 
 void	prnt_msg(t_philo *philo, char *s)
 {
-	uint64_t	now;
+	__uint64_t	now;
 
 	pthread_mutex_lock(&philo->rule->mu_can_print);
 	if (philo->rule->can_print)
 	{
 		now = get_time();
-		printf("%llu %d %s\n", now - philo->rule->start_time, philo->name, s);
+		printf("%lu %d %s\n", now - philo->rule->start_time, philo->name, s);
 	}
 	pthread_mutex_unlock(&philo->rule->mu_can_print);
 }

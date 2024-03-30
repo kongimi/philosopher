@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npiyapan <niran.analas@gmail.com>          +#+  +:+       +#+        */
+/*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 14:35:08 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/29 23:23:08 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/30 17:32:17 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	init_rule(t_rule *rule, int argc, char **argv)
 	rule->time_die = ft_atoi(argv[2]);
 	rule->time_eat = ft_atoi(argv[3]);
 	rule->time_sleep = ft_atoi(argv[4]);
-	rule->eat_num = INT64_MAX;
+	rule->eat_num = __INT64_MAX__;
+	rule->start_time = get_time();
 	rule->can_print = 1;
 	if (argc == 6)
 		rule->eat_num = ft_atoi(argv[5]);
@@ -41,6 +42,7 @@ void	init_r_fork(t_philo *p)
 	while (i < num)
 	{
 		p[i].r_fork = &p[(i + 1) % num].l_fork;
+		// printf("address of r_fork = %p\n", p[i].r_fork);
 		i++;
 	}
 }
@@ -54,6 +56,7 @@ int	init_each(t_philo *p, t_rule *rule)
 	{
 		p[tmp.i].name = tmp.i + 1;
 		p[tmp.i].rule = rule;
+		// p[tmp.i].rule->st = 0;
 		tmp.j = pthread_mutex_init(&p[tmp.i].l_fork, NULL);
 		tmp.k = pthread_mutex_init(&p[tmp.i].mutex_last_meal, NULL);
 		if (tmp.j || tmp.k)
@@ -67,6 +70,7 @@ int	init_each(t_philo *p, t_rule *rule)
 			free (p);
 			return (1);
 		}
+		// printf("philo: %d, address of l_fork = %p\n", p[tmp.i].name, &p[tmp.i].l_fork);
 		tmp.i++;
 	}
 	return (0);
@@ -75,7 +79,6 @@ int	init_each(t_philo *p, t_rule *rule)
 int	init_philo(t_philo **philo, t_rule *rule)
 {
 	t_philo	*p;
-	t_tmp	tmp;
 
 	p = (t_philo *)malloc (sizeof(t_philo) * rule->philo_num);
 	if (!p)
@@ -113,5 +116,6 @@ int	init_threads(t_philo *philo)
 		write(2, "Fail create monitor thread\n", 27);
 		exit (1);
 	}
+	philo->rule->st = 0;
 	return (0);
 }

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npiyapan <niran.analas@gmail.com>          +#+  +:+       +#+        */
+/*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:45:10 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/29 23:18:52 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/30 17:11:40 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/philo.h"
+#include <stdio.h>
 
 static int	get_forks(t_philo *philo)
 {
@@ -20,7 +21,24 @@ static int	get_forks(t_philo *philo)
 		return (1);
 	}
 	pthread_mutex_lock(&philo->l_fork);
+	pthread_mutex_lock(&philo->rule->mu_can_print);
+	if (!philo->rule->can_print)
+	{
+		pthread_mutex_unlock(&philo->l_fork);
+		pthread_mutex_unlock(&philo->rule->mu_can_print);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->rule->mu_can_print);
 	pthread_mutex_lock(philo->r_fork);
+	pthread_mutex_lock(&philo->rule->mu_can_print);
+	if (!philo->rule->can_print)
+	{
+		pthread_mutex_unlock(&philo->l_fork);
+		pthread_mutex_unlock(philo->r_fork);
+		pthread_mutex_unlock(&philo->rule->mu_can_print);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->rule->mu_can_print);
 	prnt_msg(philo, "has taken a fork.");
 	return (0);
 }
@@ -29,12 +47,13 @@ static int	eating(t_philo *philo)
 {
 	prnt_msg(philo, "is eating.");
 	ft_usleep(philo->rule->time_eat);
+
 	pthread_mutex_lock(&philo->rule->mu_can_print);
-	if (philo->rule->can_print == 0)
+	if (!philo->rule->can_print)
 	{
-		pthread_mutex_unlock(&philo->rule->mu_can_print);
 		pthread_mutex_unlock(&philo->l_fork);
 		pthread_mutex_unlock(philo->r_fork);
+		pthread_mutex_unlock(&philo->rule->mu_can_print);
 		return (1);
 	}
 	pthread_mutex_unlock(&philo->rule->mu_can_print);
@@ -56,29 +75,30 @@ static int	sleeping(t_philo *philo)
 void	*ft_action(void *p)
 {
 	t_philo		*philo;
-	uint64_t	i;
+	__uint64_t	i;
+	__uint64_t	j;
 
 	i = 0;
 	philo = (t_philo *) p;
 	pthread_mutex_lock (&philo->mutex_last_meal);
 	philo->last_meal = get_time();
-	philo->rule->start_time = get_time();
 	pthread_mutex_unlock(&philo->mutex_last_meal);
-	if ((philo->name % 2) == 0)
-		ft_usleep(philo->rule->time_sleep);
+	if ((philo->name % 2) == 1)
+		ft_usleep(10 + philo->name);
 	while (i < philo->rule->eat_num)
 	{
-		get_forks(philo);
+		if (get_forks(philo))
+			break ;
 		if (eating(philo))
+			break ;
+		j = i++;
+		if (j < philo->rule->eat_num)
 			break ;
 		sleeping(philo);
 		prnt_msg(philo, "is thinking.");
 		i++;
 	}
 	prnt_msg(philo, "have eaten all of it.");
-	pthread_mutex_lock(&philo->rule->mu_can_print);
-	philo->rule->can_print = 0;
-	pthread_mutex_unlock(&philo->rule->mu_can_print);
 	return (NULL);
 }
 

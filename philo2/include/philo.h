@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npiyapan <niran.analas@gmail.com>          +#+  +:+       +#+        */
+/*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:45:46 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/29 23:22:57 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/03/30 16:16:53 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ typedef struct s_rule
 	int				time_eat;
 	int				time_sleep;
 	int				alive;
-	long long		eat_num;
-	uint64_t		start_time;
+	int				st;
+	__uint64_t		eat_num;
+	__uint64_t		start_time;
 	pthread_mutex_t	mu_can_print;
 	int				can_print;
 }	t_rule;
@@ -53,7 +54,7 @@ void			check_input(int argc, char **argv);
 void			handle_errors(char *error_msg);
 void			init_r_fork(t_philo *p);
 void			prnt_msg(t_philo *philo, char *s);
-void			ft_usleep(uint64_t ms);
+void			ft_usleep(__uint64_t ms);
 
 void			*ft_action(void *p);
 void			*ft_monitor(void *p);
@@ -62,12 +63,12 @@ int				ft_atoi(const char *str);
 int				init_rule(t_rule *rule, int argc, char **argv);
 int				init_philo(t_philo **philo, t_rule *rule);
 int				init_threads(t_philo *philo);
-int				get_alive_time(uint64_t start_time);
+int				get_alive_time(__uint64_t start_time);
 
-uint64_t		get_time(void);
+__uint64_t		get_time(void);
 
 size_t			ft_strlen(const char *s);
 
-static void		monitor_loop(t_philo *p, t_rule *p_rule);
+void			monitor_loop(t_philo *p, t_rule *p_rule);
 
 int				join_threads(t_philo *philo, int num);
