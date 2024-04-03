@@ -6,11 +6,12 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 14:35:08 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/30 17:32:17 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:12:42 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/philo.h"
+#include <stdio.h>
 
 int	init_rule(t_rule *rule, int argc, char **argv)
 {
@@ -22,11 +23,17 @@ int	init_rule(t_rule *rule, int argc, char **argv)
 	rule->eat_num = __INT64_MAX__;
 	rule->start_time = get_time();
 	rule->can_print = 1;
+	rule->meals = 0;
 	if (argc == 6)
 		rule->eat_num = ft_atoi(argv[5]);
 	if (pthread_mutex_init(&rule->mu_can_print, NULL))
 	{
-		write(2, "Fail init mutex", 15);
+		write(2, "Fail init mutex can print", 25);
+		return (1);
+	}
+	if (pthread_mutex_init(&rule->mu_meals, NULL))
+	{
+		write(2, "Fail init mutex meals", 21);
 		return (1);
 	}
 	return (0);
@@ -42,7 +49,16 @@ void	init_r_fork(t_philo *p)
 	while (i < num)
 	{
 		p[i].r_fork = &p[(i + 1) % num].l_fork;
-		// printf("address of r_fork = %p\n", p[i].r_fork);
+		if ((p[i].name % 2) == 0)
+		{
+			p[i].first_fork = &p[i].l_fork;
+			p[i].second_fork = p[i].r_fork;
+		}
+		else
+		{
+			p[i].first_fork = p[i].r_fork;
+			p[i].second_fork = &p[i].l_fork;
+		}
 		i++;
 	}
 }
@@ -56,10 +72,9 @@ int	init_each(t_philo *p, t_rule *rule)
 	{
 		p[tmp.i].name = tmp.i + 1;
 		p[tmp.i].rule = rule;
-		// p[tmp.i].rule->st = 0;
 		tmp.j = pthread_mutex_init(&p[tmp.i].l_fork, NULL);
 		tmp.k = pthread_mutex_init(&p[tmp.i].mutex_last_meal, NULL);
-		if (tmp.j || tmp.k)
+		if (tmp.j < 0 || tmp.k < 0)
 		{
 			while (--tmp.i >= 0)
 			{
@@ -67,10 +82,10 @@ int	init_each(t_philo *p, t_rule *rule)
 				pthread_mutex_destroy(&p[tmp.i].mutex_last_meal);
 			}
 			pthread_mutex_destroy(&rule->mu_can_print);
+			pthread_mutex_destroy(&rule->mu_meals);
 			free (p);
 			return (1);
 		}
-		// printf("philo: %d, address of l_fork = %p\n", p[tmp.i].name, &p[tmp.i].l_fork);
 		tmp.i++;
 	}
 	return (0);

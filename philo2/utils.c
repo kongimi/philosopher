@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:46:09 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/03/30 11:42:19 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/04/03 11:24:36 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	prnt_msg(t_philo *philo, char *s)
 {
 	__uint64_t	now;
 
-	pthread_mutex_lock(&philo->rule->mu_can_print);
+	if (pthread_mutex_lock(&philo->rule->mu_can_print) < 0)
+		return ;
 	if (philo->rule->can_print)
 	{
 		now = get_time();
@@ -70,4 +71,10 @@ int	join_threads(t_philo *philo, int num)
 	}
 	pthread_join(philo[0].monitor_thds, NULL);
 	return (0);
+}
+
+void	unlock_forks(t_philo *philo)
+{
+	pthread_mutex_unlock(philo->first_fork);
+	pthread_mutex_unlock(philo->second_fork);
 }
