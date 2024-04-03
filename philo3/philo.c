@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:45:10 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/04/03 18:20:02 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/04/03 20:46:49 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ static int	eating(t_philo *philo, __uint64_t i)
 
 static int	sleeping(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->rule->mu_can_print);
-	if (!philo->rule->can_print)
-	{
-		pthread_mutex_unlock(&philo->rule->mu_can_print);
-		return (1);
-	}
-	pthread_mutex_unlock(&philo->rule->mu_can_print);
+	// pthread_mutex_lock(&philo->rule->mu_can_print);
+	// if (!philo->rule->can_print)
+	// {
+	// 	pthread_mutex_unlock(&philo->rule->mu_can_print);
+	// 	return (1);
+	// }
+	// pthread_mutex_unlock(&philo->rule->mu_can_print);
 	prnt_msg(philo, "is sleeping");
 	ft_usleep(philo->rule->time_sleep);
 	pthread_mutex_lock(&philo->rule->mu_can_print);
@@ -83,7 +83,7 @@ void	*ft_action(void *p)
 	philo->last_meal = get_time();
 	pthread_mutex_unlock(&philo->mutex_last_meal);
 	if ((philo->name % 2) == 0)
-		ft_usleep(philo->rule->time_eat);
+		ft_usleep(20);
 	while (i < philo->rule->eat_num)
 	{
 		if (get_forks(philo))

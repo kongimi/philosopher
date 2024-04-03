@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 12:26:12 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/04/03 15:46:31 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/04/03 19:35:05 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,10 @@ void	monitor_loop(t_philo *p, t_rule *p_rule)
 		pthread_mutex_lock(&p[i].mutex_last_meal);
 		if (get_alive_time(p[i].last_meal) > p_rule->time_die)
 		{
-			if (p[0].rule->eat_num == __INT64_MAX__)
-			{
-				prnt_msg(&p[i], "died");
-				pthread_mutex_lock(&p[i].rule->mu_can_print);
-				p[i].rule->can_print = 0;
-				pthread_mutex_unlock(&p[i].rule->mu_can_print);
-			}
+			prnt_msg(&p[i], "died");
+			pthread_mutex_lock(&p[i].rule->mu_can_print);
+			p[i].rule->can_print = 0;
+			pthread_mutex_unlock(&p[i].rule->mu_can_print);
 		}
 		pthread_mutex_unlock(&p[i].mutex_last_meal);
 		pthread_mutex_lock(&p[0].rule->mu_meals);
