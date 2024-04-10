@@ -6,7 +6,7 @@
 #    By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/21 14:41:01 by npiyapan          #+#    #+#              #
-#    Updated: 2024/04/03 18:12:32 by npiyapan         ###   ########.fr        #
+#    Updated: 2024/04/10 15:24:31 by npiyapan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,19 +21,18 @@ CFLAGS = -Wall -Werror -Wextra -g
 # CFLAGS = -fsanitize=thread -g -lpthread
 # CFLAGS = -Wno-nullability-completeness
 
-
 SRC_FILE = philo check_input handle_error utils init_all time monitor_thds utils2
 
 SRC = $($(addsuffix .c, $(SRC_FILE)))
 OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILE)))
 
-bin/%.o: %.c
+all:	$(NAME)
+
+bin/%.o: %.c $(HEADER) Makefile
 	@mkdir -p bin
 	$(CC) $(CFLAGS) -c $< -o $@
 
-all:	$(NAME)
-
-$(NAME): $(OBJ) $(HEADER)
+$(NAME): $(OBJ) 
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
 clean:

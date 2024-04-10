@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:45:10 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/04/03 20:46:49 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/04/10 17:14:04 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ static int	eating(t_philo *philo, __uint64_t i)
 
 static int	sleeping(t_philo *philo)
 {
-	// pthread_mutex_lock(&philo->rule->mu_can_print);
-	// if (!philo->rule->can_print)
-	// {
-	// 	pthread_mutex_unlock(&philo->rule->mu_can_print);
-	// 	return (1);
-	// }
-	// pthread_mutex_unlock(&philo->rule->mu_can_print);
+	pthread_mutex_lock(&philo->rule->mu_can_print);
+	if (!philo->rule->can_print)
+	{
+		pthread_mutex_unlock(&philo->rule->mu_can_print);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->rule->mu_can_print);
 	prnt_msg(philo, "is sleeping");
 	ft_usleep(philo->rule->time_sleep);
 	pthread_mutex_lock(&philo->rule->mu_can_print);
@@ -106,7 +106,8 @@ int	main(int argc, char **argv)
 	t_rule		rule;
 	t_philo		*philo;
 
-	check_input(argc, argv);
+	if (check_input(argc, argv))
+		return (1);
 	if (init_rule(&rule, argc, argv))
 		return (1);
 	if (init_philo(&philo, &rule))

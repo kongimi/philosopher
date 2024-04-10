@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 14:35:08 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/04/03 12:12:42 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/04/10 17:08:09 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,14 +122,14 @@ int	init_threads(t_philo *philo)
 		if (pthread_create(&philo[i].thds, NULL, &ft_action, &philo[i]))
 		{
 			write(2, "Fail create thread\n", 19);
-			exit (1);
+			return (1);
 		}
 		i++;
 	}
 	if (pthread_create(&philo[0].monitor_thds, NULL, &ft_monitor, philo))
 	{
 		write(2, "Fail create monitor thread\n", 27);
-		exit (1);
+		return (1);
 	}
 	philo->rule->st = 0;
 	return (0);

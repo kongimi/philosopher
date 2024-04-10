@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:45:46 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/04/03 15:55:42 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/04/10 17:11:58 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,14 @@ typedef struct s_philo
 	pthread_t		monitor_thds;
 }	t_philo;
 
-void			check_input(int argc, char **argv);
-void			handle_errors(char *error_msg);
 void			init_r_fork(t_philo *p);
 void			prnt_msg(t_philo *philo, char *s);
 void			ft_usleep(__uint64_t ms);
-
 void			*ft_action(void *p);
 void			*ft_monitor(void *p);
 
+int				check_input(int argc, char **argv);
+int				handle_errors(char *error_msg);
 int				ft_atoi(const char *str);
 int				init_rule(t_rule *rule, int argc, char **argv);
 int				init_philo(t_philo **philo, t_rule *rule);
