@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:45:46 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/04/10 17:11:58 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/04/14 12:38:11 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ size_t			ft_strlen(const char *s);
 void			monitor_loop(t_philo *p, t_rule *p_rule);
 void			unlock_forks(t_philo *philo);
 void			inc_meals(t_philo *philo);
+void			destroy_mutex(t_philo *philo, int i);
 
 int				join_threads(t_philo *philo, int num);
 int				wait_meals(t_philo *philo);

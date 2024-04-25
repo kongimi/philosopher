@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 11:28:33 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/04/03 20:47:27 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/04/14 12:37:49 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,15 @@ int	wait_meals(t_philo *philo)
 	pthread_mutex_unlock(&philo->rule->mu_meals);
 	ft_usleep(10);
 	return (1);
+}
+
+void	destroy_mutex(t_philo *philo, int i)
+{
+	while (--i >= 0)
+	{
+		pthread_mutex_destroy(&philo[i].l_fork);
+		pthread_mutex_destroy(&philo[i].mutex_last_meal);
+	}
+	pthread_mutex_destroy(&philo->rule->mu_can_print);
+	pthread_mutex_destroy(&philo->rule->mu_meals);
 }

@@ -6,11 +6,12 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 14:35:08 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/04/10 17:08:09 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/04/14 12:40:12 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/philo.h"
+#include <pthread.h>
 #include <stdio.h>
 
 int	init_rule(t_rule *rule, int argc, char **argv)
@@ -33,6 +34,7 @@ int	init_rule(t_rule *rule, int argc, char **argv)
 	}
 	if (pthread_mutex_init(&rule->mu_meals, NULL))
 	{
+		pthread_mutex_destroy(&rule->mu_can_print);
 		write(2, "Fail init mutex meals", 21);
 		return (1);
 	}
@@ -99,6 +101,7 @@ int	init_philo(t_philo **philo, t_rule *rule)
 	if (!p)
 	{
 		pthread_mutex_destroy(&rule->mu_can_print);
+		pthread_mutex_destroy(&rule->mu_meals);
 		write (2, "malloc error init_philo\n", 24);
 		return (1);
 	}

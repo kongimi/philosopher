@@ -6,7 +6,7 @@
 /*   By: npiyapan <npiyapan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 16:43:56 by npiyapan          #+#    #+#             */
-/*   Updated: 2024/04/10 17:17:14 by npiyapan         ###   ########.fr       */
+/*   Updated: 2024/04/14 12:24:20 by npiyapan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	check_input(int argc, char **argv)
 	if (argc > 6)
 		return (handle_errors("Usage : argument should not over 6\n"));
 	if (argc != 5 && argc != 6)
-		return (handle_errors("Usage : amount_of_philo die eat sleep time_to_stop\n"));
+		return (handle_errors("Usage : amount_philo die eat sleep round\n"));
 	if (check_argv(argv))
 		return (handle_errors("Usage : input must be only number.\n"));
 	n = ft_atoi(argv[1]);
